@@ -1,5 +1,7 @@
 # BC-store
-BC-store is available in two versions: desktop for Windows and command line for operating systems with pre-installed Python3, available for download in this repository
+BC-store is available in two versions available for download in this repository: 
+- desktop for Windows and other OS with Python3 and required libraries
+- command line for operating systems with pre-installed Python3
 
 # How it works from the command line
 The program is launched by running it from the command line:
