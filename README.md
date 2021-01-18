@@ -17,3 +17,5 @@ The desktop version has the numbering of input fields and buttons.
 When you start the desktop version, an additional window opens where errors are displayed so that you do not need to close it for the program to work correctly. The main areas of work are set analysis, set selection and output of basic sets. After clicking the "Click to analyse set" button and, if there are additional set barcodes, when clicking the "Click to analyze adding" button, the user will be provided with a graph. Do not press buttons "Click to analyse set" and "Click to analyze adding" until you have filled in all the required fields. 
 The program  presents the output information on user-defined barcodes, mixing proportions, values of nucleotide representation, and the main information on whether this set meets the strong and lite criteria
 
+More info with figures you can see in README.pdf and samples in the article full text https://www.biorxiv.org/content/10.1101/2020.10.28.355156v1
+
