@@ -1,10 +1,8 @@
+import itertools
 import sys
-import os
-import subprocess
-import re
+
 # import pandas as pd
 import matplotlib.pyplot as plt
-import itertools
 
 #CONST
 #MGI barcode numbers
@@ -20,11 +18,21 @@ MGI_barcode_number = [
     '127', '128', '999',
     '1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '3A', '3B', '3C', '3D', '4A', '4B', '4C', '4D',
     '13A', '13B', '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D', '16A', '16B', '16C', '16D',
-    '25A', '25B', '25C', '25D', '26A', '26B', '26C', '26D', '29A', '29B', '29C', '29D',
-    '32A', '32B', '32C', '32D', '33A', '33B', '33C', '33D', '35A', '35B', '35C', '35D', '36A', '36B', '36C', '36D',
-    '37A', '37B', '37C', '37D', '38A', '38B', '38C', '38D', '41A', '41B', '41C', '41D', '42A', '42B', '42C', '42D',
-    '43A', '43B', '43C', '43D', '44A', '44B', '44C', '44D', '47A', '47B', '47C', '47D', '48A', '48B', '48C', '48D',
-    '51A', '51B', '51C', '51D', '53A', '53B', '53C', '53D',
+    '25A', '25B', '25C', '25D', '26A', '26B', '26C', '26D', '29A', '29B', '29C', '29D', '32A', '32B', '32C', '32D',
+    '33A', '33B', '33C', '33D', '35A', '35B', '35C', '35D', '36A', '36B', '36C', '36D', '37A', '37B', '37C', '37D',
+    '38A', '38B', '38C', '38D', '41A', '41B', '41C', '41D', '42A', '42B', '42C', '42D', '43A', '43B', '43C', '43D',
+    '44A', '44B', '44C', '44D', '47A', '47B', '47C', '47D', '48A', '48B', '48C', '48D', '51A', '51B', '51C', '51D',
+    '53A', '53B', '53C', '53D', '55A', '55B', '55C', '55D', '56A', '56B', '56C', '56D', '57A', '57B', '57C', '57D',
+    '59A', '59B', '59C', '59D', '61A', '61B', '61C', '61D', '62A', '62B', '62C', '62D', '63A', '63B', '63C', '63D',
+    '64A', '64B', '64C', '64D', '65A', '65B', '65C', '65D', '66A', '66B', '66C', '66D', '68A', '68B', '68C', '68D',
+    '69A', '69B', '69C', '69D', '71A', '71B', '71C', '71D', '72A', '72B', '72C', '72D', '75A', '75B', '75C', '75D',
+    '76A', '76B', '76C', '76D', '77A', '77B', '77C', '77D', '79A', '79B', '79C', '79D', '80A', '80B', '80C', '80D',
+    '81A', '81B', '81C', '81D', '82A', '82B', '82C', '82D', '83A', '83B', '83C', '83D', '84A', '84B', '84C', '84D',
+    '85A', '85B', '85C', '85D', '86A', '86B', '86C', '86D', '88A', '88B', '88C', '88D', '89A', '89B', '89C', '89D',
+    '92A', '92B', '92C', '92D', '93A', '93B', '93C', '93D', '95A', '95B', '95C', '95D', '100A', '100B', '100C', '100D',
+    '104A', '104B', '104C', '104D', '117A', '117B', '117C', '117D', '121A', '121B', '121C', '121D',
+    '122A', '122B', '122C', '122D', '124A', '124B', '124C', '124D', '125A', '125B', '125C', '125D',
+    '127A', '127B', '127C', '127D'
 ]
 #MGI barcode sequence
 MGI_barcode_sequence = [
@@ -48,21 +56,38 @@ MGI_barcode_sequence = [
     'TGGAGTACCC', 'CCTTGATCAA', 'GGAAGTGGCA', 'AACATTCTAC', 'GACGCGAGTC', 'CTATAACACT', 'AGTCTCGTGT',
     'TCGGCCTATG', 'TTGCAGACGG', 'GCGTATGCGG',
 
-    'TAGGTCCGAT', 'GTCCGAACTG', 'CGAACTTAGC', 'ACTTAGGTCA', 'GGACGGAATC', 'CCTACCTTGA', 'AAGTAAGGCT',
-    'TTCGTTCCAG', 'CTTACTGCCG', 'AGGTAGCAAC', 'TCCGTCATTA', 'GAACGATGGT', 'ACCTAATTGA', 'TAAGTTGGCT',
-    'GTTCGGCCAG', 'CGGACCAATC', 'CGGCAATCCG', 'ACCATTGAAC', 'TAATGGCTTA', 'GTTGCCAGGT', 'ATCAGGATTC',
-    'TGATCCTGGA', 'GCTGAAGCCT', 'CAGCTTCAAG', 'TCATTCCAGA', 'GATGGAATCT', 'CTGCCTTGAG', 'AGCAAGGCTC',
-    'GATGCTGGAT', 'CTGCAGCCTG', 'AGCATCAAGC', 'TCATGATTCA', 'TAGAGGACAA', 'GTCTCCTATT', 'CGAGAAGTGG',
-    'ACTCTTCGCC', 'CCTAGCGAAT', 'AAGTCACTTG', 'TTCGATAGGC', 'GGACTGTCCA', 'AACCTAGATA', 'TTAAGTCTGT',
-    'GGTTCGAGCG', 'CCGGACTCAC', 'CGCTATCGGC', 'ACAGTGACCA', 'TATCGCTAAT', 'GTGACAGTTG', 'GCAACGATGG',
-    'CATTACTGCC', 'ATGGTAGCAA', 'TGCCGTCATT', 'GTTCGCTCTA', 'CGGACAGAGT', 'ACCTATCTCG', 'TAAGTGAGAC',
-    'TCTCACACAT', 'GAGATATATG', 'CTCTGTGTGC', 'AGAGCGCGCA', 'CTGTTAGGAT', 'AGCGGTCCTG', 'TCACCGAAGC',
-    'GATAACTTCA', 'CGCAGACGCG', 'ACATCTACAC', 'TATGAGTATA', 'GTGCTCGTGT', 'TTAGATGCAT', 'GGTCTGCATG',
-    'CCGAGCATGC', 'AACTCATGCA', 'GTCCAGAGCT', 'CGAATCTCAG', 'ACTTGAGATC', 'TAGGCTCTGA', 'CACGTGATAG',
-    'ATACGCTGTC', 'TGTACAGCGA', 'GCGTATCACT', 'CCACTAGTCC', 'AATAGTCGAA', 'TTGTCGACTT', 'GGCGACTAGG',
-    'AAGACCTCTA', 'TTCTAAGAGT', 'GGAGTTCTCG', 'CCTCGGAGAC', 'AGTTGCCATA', 'TCGGCAATGT', 'GACCATTGCG',
-    'CTAATGGCAC', 'TGCGCCACTT', 'GCACAATAGG', 'CATATTGTCC', 'ATGTGGCGAA', 'CCGCCTCAGA', 'AACAAGATCT',
-    'TTATTCTGAG', 'GGTGGAGCTC',
+    'TAGGTCCGAT', 'GTCCGAACTG', 'CGAACTTAGC', 'ACTTAGGTCA', 'GGACGGAATC', 'CCTACCTTGA', 'AAGTAAGGCT', 'TTCGTTCCAG',
+    'CTTACTGCCG', 'AGGTAGCAAC', 'TCCGTCATTA', 'GAACGATGGT', 'ACCTAATTGA', 'TAAGTTGGCT', 'GTTCGGCCAG', 'CGGACCAATC',
+    'CGGCAATCCG', 'ACCATTGAAC', 'TAATGGCTTA', 'GTTGCCAGGT', 'ATCAGGATTC', 'TGATCCTGGA', 'GCTGAAGCCT', 'CAGCTTCAAG',
+    'TCATTCCAGA', 'GATGGAATCT', 'CTGCCTTGAG', 'AGCAAGGCTC', 'GATGCTGGAT', 'CTGCAGCCTG', 'AGCATCAAGC', 'TCATGATTCA',
+    'TAGAGGACAA', 'GTCTCCTATT', 'CGAGAAGTGG', 'ACTCTTCGCC', 'CCTAGCGAAT', 'AAGTCACTTG', 'TTCGATAGGC', 'GGACTGTCCA',
+    'AACCTAGATA', 'TTAAGTCTGT', 'GGTTCGAGCG', 'CCGGACTCAC', 'CGCTATCGGC', 'ACAGTGACCA', 'TATCGCTAAT', 'GTGACAGTTG',
+    'GCAACGATGG', 'CATTACTGCC', 'ATGGTAGCAA', 'TGCCGTCATT', 'GTTCGCTCTA', 'CGGACAGAGT', 'ACCTATCTCG', 'TAAGTGAGAC',
+    'TCTCACACAT', 'GAGATATATG', 'CTCTGTGTGC', 'AGAGCGCGCA', 'CTGTTAGGAT', 'AGCGGTCCTG', 'TCACCGAAGC', 'GATAACTTCA',
+    'CGCAGACGCG', 'ACATCTACAC', 'TATGAGTATA', 'GTGCTCGTGT', 'TTAGATGCAT', 'GGTCTGCATG', 'CCGAGCATGC', 'AACTCATGCA',
+    'GTCCAGAGCT', 'CGAATCTCAG', 'ACTTGAGATC', 'TAGGCTCTGA', 'CACGTGATAG', 'ATACGCTGTC', 'TGTACAGCGA', 'GCGTATCACT',
+    'CCACTAGTCC', 'AATAGTCGAA', 'TTGTCGACTT', 'GGCGACTAGG', 'AAGACCTCTA', 'TTCTAAGAGT', 'GGAGTTCTCG', 'CCTCGGAGAC',
+    'AGTTGCCATA', 'TCGGCAATGT', 'GACCATTGCG', 'CTAATGGCAC', 'TGCGCCACTT', 'GCACAATAGG', 'CATATTGTCC', 'ATGTGGCGAA',
+    'CCGCCTCAGA', 'AACAAGATCT', 'TTATTCTGAG', 'GGTGGAGCTC', 'GCCGGTTATC', 'CAACCGGTGA', 'ATTAACCGCT', 'TGGTTAACAG',
+    'GGAATATTGA', 'CCTTGTGGCT', 'AAGGCGCCAG', 'TTCCACAATC', 'ATTCAACGGA', 'TGGATTACCT', 'GCCTGGTAAG', 'CAAGCCGTTC',
+    'GTACCTCAAT', 'CGTAAGATTG', 'ACGTTCTGGC', 'TACGGAGCCA', 'TGAAGCGTTG', 'GCTTCACGGC', 'CAGGATACCA', 'ATCCTGTAAT',
+    'CGTGCGATCC', 'ACGCACTGAA', 'TACATAGCTT', 'GTATGTCAGG', 'TCGGAAGGCA', 'GACCTTCCAT', 'CTAAGGAATG', 'AGTTCCTTGC',
+    'CCGATGTCGC', 'AACTGCGACA', 'TTAGCACTAT', 'GGTCATAGTG', 'ACTTAGAATG', 'TAGGTCTTGC', 'GTCCGAGGCA', 'CGAACTCCAT',
+    'TCCAAGCCTG', 'GAATTCAAGC', 'CTTGGATTCA', 'AGGCCTGGAT', 'CTCACAAGAC', 'AGATATTCTA', 'TCTGTGGAGT', 'GAGCGCCTCG',
+    'CGTTCCTACT', 'ACGGAAGTAG', 'TACCTTCGTC', 'GTAAGGACGA', 'GAAGGCCTGC', 'CTTCCAAGCA', 'AGGAATTCAT', 'TCCTTGGATG',
+    'TAGCTTGCCA', 'GTCAGGCAAT', 'CGATCCATTG', 'ACTGAATGGC', 'AGTCCATAGG', 'TCGAATGTCC', 'GACTTGCGAA', 'CTAGGCACTT',
+    'CTATCGCCTA', 'AGTGACAAGT', 'TCGCTATTCG', 'GACAGTGGAC', 'ATCGTGGTCT', 'TGACGCCGAG', 'GCTACAACTC', 'CAGTATTAGA',
+    'CAGTGCAGAG', 'ATCGCATCTC', 'TGACATGAGA', 'GCTATGCTCT', 'TCAGGCTGGT', 'GATCCAGCCG', 'CTGAATCAAC', 'AGCTTGATTA',
+    'ATACTCACGC', 'TGTAGATACA', 'GCGTCTGTAT', 'CACGAGCGTG', 'ATGCTCCGCG', 'TGCAGAACAC', 'GCATCTTATA', 'CATGAGGTGT',
+    'TGTGAACTTG', 'GCGCTTAGGC', 'CACAGGTCCA', 'ATATCCGAAT', 'GAGAGGTGCT', 'CTCTCCGCAG', 'AGAGAACATC', 'TCTCTTATGA',
+    'TGCACTGTAA', 'GCATAGCGTT', 'CATGTCACGG', 'ATGCGATACC', 'GCCTAGGCAA', 'CAAGTCCATT', 'ATTCGAATGG', 'TGGACTTGCC',
+    'CATGGTAATT', 'ATGCCGTTGG', 'TGCAACGGCC', 'GCATTACCAA', 'CACCATGTCT', 'ATAATGCGAG', 'TGTTGCACTC', 'GCGGCATAGA',
+    'TCAAGACGTC', 'GATTCTACGA', 'CTGGAGTACT', 'AGCCTCGTAG', 'CCGCTCAGTA', 'AACAGATCGT', 'TTATCTGACG', 'GGTGAGCTAC',
+    'TTCACGTAAG', 'GGATACGTTC', 'CCTGTACGGA', 'AAGCGTACCT', 'CTCGGCGGAA', 'AGACCACCTT', 'TCTAATAAGG', 'GAGTTGTTCC',
+    'GATTCTCTTC', 'CTGGAGAGGA', 'AGCCTCTCCT', 'TCAAGAGAAG', 'ATGTCTATCC', 'TGCGAGTGAA', 'GCACTCGCTT', 'CATAGACAGG',
+    'CCTTGATCAA', 'AAGGCTGATT', 'TTCCAGCTGG', 'GGAATCAGCC', 'GGAAGTGGCA', 'CCTTCGCCAT', 'AAGGACAATG', 'TTCCTATTGC',
+    'GACGCGAGTC', 'CTACACTCGA', 'AGTATAGACT', 'TCGTGTCTAG', 'CTATAACACT', 'AGTGTTATAG', 'TCGCGGTGTC', 'GACACCGCGA',
+    'TCGGCCTATG', 'GACCAAGTGC', 'CTAATTCGCA', 'AGTTGGACAT',
 ]
 
 linenum=list(range(0,129))
@@ -310,7 +335,7 @@ elif option == "add_to_set":
             flag_argv[3]+=1
             criteria_line = str(sys.argv[i])
         elif 'from_barcodes' in sys.argv[i]:
-            flag_argv[4]+=1
+            flag_argv[4] += 1
             from_barcodes_line = str(sys.argv[i])
         else:
             print('\n', sys.argv[i],' is wrong argument\n')
@@ -319,44 +344,43 @@ elif option == "add_to_set":
         print('not all arguments provided')
         error_flag = 1
     if error_flag == 0:
-        how_many_add=int(how_many_add_line.split("=")[1])
+        how_many_add = int(how_many_add_line.split("=")[1])
         current_set = current_set_line.split("=")[1].split(",")
-        if rate_with_add_line=='rate_with_add=equal':
-            rate_with_add=[1.0]*(len(current_set)+how_many_add)
+        if rate_with_add_line == 'rate_with_add=equal':
+            rate_with_add = [1.0] * (len(current_set) + how_many_add)
         else:
             rate_with_add = [float(i) for i in rate_with_add_line.split("=")[1].split(",")]
         criteria = criteria_line.split("=")[1]
         from_barcodes = from_barcodes_line.split("=")[1].split(",")
-        #while("" in set):
+        # while("" in set):
         #    set.remove("")
-        #while("" in rate):
+        # while("" in rate):
         #    rate.remove("")
-        if (rate_with_add_line!='rate_with_add=equal') and (len(rate_with_add) != len(current_set)+how_many_add):
+        if (rate_with_add_line != 'rate_with_add=equal') and (len(rate_with_add) != len(current_set) + how_many_add):
             print("\n\nDifferent lenght of current_set with how_many_add and rate_with_add. They must be equal")
             error_flag = 1
         if not (criteria=='strong' or criteria=='lite'):
             error_flag = 1
             print("\nWrong criteria name")
         # ADD other variants of mistakes
-        #
-        #
         if error_flag == 0:
             add_to_set_function(current_set,how_many_add,rate_with_add,criteria,from_barcodes)
 
 
 elif option == "help":
-    print(\
-        "Welcome to BC-store.\n\nHere you can check your set by command like:\n"+\
-        "python3 bc-store_script.py check_set set=1,2,3,4 rate=1,2,1,2 criteria=strong\n\n"+\
-        "or add some barcodes to current set by command like:\n"+\
-        "python3 bc-store_script.py add_to_set current_set=1,2,3,4 how_many_add=2 rate_with_add=1,2,1,2,3,4 criteria=lite from_barcodes=13,14,15,16\n\n"+\
-        "avoid using spaces inside parameters\n\n"+\
-        "also you can see MGI sets by command:\n"+\
-        "python3 bc-store_script.py MGI_sets\n\n"+\
-        "ask for help by command:\n"+\
-        "python3 bc-store_script.py help\n\n"+\
-        "MORE information about parameters:\n"+\
-        "set - this parameter...\n"\
+    print(
+        "Welcome to BC-store.\n\nHere you can check your set by command like:\n" +
+        "python3 bc-store_script.py check_set set=1,2,3,4 rate=1,2,1,2 criteria=strong\n\n" +
+        "or add some barcodes to current set by command like:\n" +
+        "python3 bc-store_script.py add_to_set current_set=1,2,3,4 how_many_add=2 rate_with_add=1,2,1,2,3,4 "
+        "criteria=lite from_barcodes=13,14,15,16\n\n" +
+        "avoid using spaces inside parameters\n\n" +
+        "also you can see MGI sets by command:\n" +
+        "python3 bc-store_script.py MGI_sets\n\n" +
+        "ask for help by command:\n" +
+        "python3 bc-store_script.py help\n\n" +
+        "MORE information about parameters:\n" +
+        "set - this parameter...\n"
     )
 elif option == "MGI_sets":
     print(
@@ -372,25 +396,27 @@ elif option == "MGI_sets":
         '\nset10:\t121,122,123,124,125,126,127,128',
         '\nsetbig:\t25,26,117,28,29,30,114,32,33,34,35,36,',
         '\n\t37,38,39,115,49,50,51,52,53,116,55,56',
-        '\nsetGC_ABCD:\t1A,1B,1C,1D,2A,2B,2C,2D,',
-        '\n\t\t3A,3B,3C,3D,4A,4B,4C,4D,',
-        '\n\t\t13A,13B,13C,13D,14A,14B,14C,14D,',
-        '\n\t\t15A,15B,15C,15D,16A,16B,16C,16D,',
-        '\n\t\t25A,25B,25C,25D,26A,26B,26C,26D,',
-        '\n\t\t29A,29B,29C,29D,32A,32B,32C,32D,',
-        '\n\t\t33A,33B,33C,33D,35A,35B,35C,35D,',
-        '\n\t\t36A,36B,36C,36D,37A,37B,37C,37D,',
-        '\n\t\t38A,38B,38C,38D,41A,41B,41C,41D,',
-        '\n\t\t42A,42B,42C,42D,43A,43B,43C,43D,',
-        '\n\t\t44A,44B,44C,44D,47A,47B,47C,47D,',
-        '\n\t\t48A,48B,48C,48D,51A,51B,51C,51D,',
-        '\n\t\t53A,53B,53C,53D\n'
-        )
+        '\nsetGC_ABCD:\t1A,1B,1C,1D,2A,2B,2C,2D,3A,3B,3C,3D,4A,4B,4C,4D,'
+        '\n\t\t13A,13B,13C,13D,14A,14B,14C,14D,15A,15B,15C,15D,16A,16B,16C,16D,'
+        '\n\t\t25A,25B,25C,25D,26A,26B,26C,26D,29A,29B,29C,29D,32A,32B,32C,32D,'
+        '\n\t\t33A,33B,33C,33D,35A,35B,35C,35D,36A,36B,36C,36D,37A,37B,37C,37D,'
+        '\n\t\t38A,38B,38C,38D,41A,41B,41C,41D,42A,42B,42C,42D,43A,43B,43C,43D,'
+        '\n\t\t44A,44B,44C,44D,47A,47B,47C,47D,48A,48B,48C,48D,51A,51B,51C,51D,'
+        '\n\t\t53A,53B,53C,53D,55A,55B,55C,55D,56A,56B,56C,56D,57A,57B,57C,57D,'
+        '\n\t\t59A,59B,59C,59D,61A,61B,61C,61D,62A,62B,62C,62D,63A,63B,63C,63D,'
+        '\n\t\t64A,64B,64C,64D,65A,65B,65C,65D,66A,66B,66C,66D,68A,68B,68C,68D,'
+        '\n\t\t69A,69B,69C,69D,71A,71B,71C,71D,72A,72B,72C,72D,75A,75B,75C,75D,'
+        '\n\t\t76A,76B,76C,76D,77A,77B,77C,77D,79A,79B,79C,79D,80A,80B,80C,80D,'
+        '\n\t\t81A,81B,81C,81D,82A,82B,82C,82D,83A,83B,83C,83D,84A,84B,84C,84D,'
+        '\n\t\t85A,85B,85C,85D,86A,86B,86C,86D,88A,88B,88C,88D,89A,89B,89C,89D,'
+        '\n\t\t92A,92B,92C,92D,93A,93B,93C,93D,95A,95B,95C,95D,100A,100B,100C,100D,'
+        '\n\t\t104A,104B,104C,104D,117A,117B,117C,117D,121A,121B,121C,121D,'
+        '\n\t\t122A,122B,122C,122D,124A,124B,124C,124D,125A,125B,125C,125D,127A,127B,127C,127D\n'
+    )
 else:
     print(
         "\nincorrect command "+str(sys.argv[1])+"\n",
         "Please, run script with \"help\" like:\n",
         "python3 bc-store_script.py help\n",
         "to see the variants\n",
-   )
-print(len(MGI_barcode_number), len(MGI_barcode_sequence))
+    )

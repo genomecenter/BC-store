@@ -1,12 +1,11 @@
 # https://tproger.ru/translations/python-gui-pyqt/
 
+import itertools
 import sys  # sys нужен для передачи argv в QApplication
-import os  # Отсюда нам понадобятся методы для отображения содержимого директорий
-from typing import List, Any
-from PyQt5 import QtWidgets
+
 import designwhole  # Это наш конвертированный файл дизайна
 import matplotlib.pyplot as plt
-import itertools
+from PyQt5 import QtWidgets
 
 
 class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
@@ -29,13 +28,22 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
                  '\nset10: 121, 122, 123, 124, 125, 126, 127, 128' + \
                  '\nsetbig: 25, 26, 117, 28, 29, 30, 114, 32, 33, 34, 35, 36, 37, 38, 39, 115, ' + \
                  '49, 50, 51, 52, 53, 116, 55, 56' + \
-                 '\nsetGC_ABCD: 1A, 1B, 1C, 1D, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, 4A, 4B, 4C, 4D, 13A, 13B, 13C, 13D, ' \
-                 '14A, 14B, 14C, 14D, 15A, 15B, 15C, 15D, 16A, 16B, 16C, 16D, ' \
-                 '25A, 25B, 25C, 25D, 26A, 26B, 26C, 26D, 29A, 29B, 29C, 29D, ' \
-                 '32A, 32B, 32C, 32D, 33A, 33B, 33C, 33D, 35A, 35B, 35C, 35D, 36A, 36B, 36C, 36D, ' \
-                 '37A, 37B, 37C, 37D, 38A, 38B, 38C, 38D, 41A, 41B, 41C, 41D, 42A, 42B, 42C, 42D, ' \
-                 '43A, 43B, 43C, 43D, 44A, 44B, 44C, 44D, 47A, 47B, 47C, 47D, 48A, 48B, 48C, 48D, ' \
-                 '51A, 51B, 51C, 51D, 53A, 53B, 53C, 53D'
+                 '\nsetGC_ABCD: 1A, 1B, 1C, 1D, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, 4A, 4B, 4C, 4D, ' \
+                 '13A, 13B, 13C, 13D, 14A, 14B, 14C, 14D, 15A, 15B, 15C, 15D, 16A, 16B, 16C, 16D, ' \
+                 '25A, 25B, 25C, 25D, 26A, 26B, 26C, 26D, 29A, 29B, 29C, 29D, 32A, 32B, 32C, 32D, ' \
+                 '33A, 33B, 33C, 33D, 35A, 35B, 35C, 35D, 36A, 36B, 36C, 36D, 37A, 37B, 37C, 37D, ' \
+                 '38A, 38B, 38C, 38D, 41A, 41B, 41C, 41D, 42A, 42B, 42C, 42D, 43A, 43B, 43C, 43D, ' \
+                 '44A, 44B, 44C, 44D, 47A, 47B, 47C, 47D, 48A, 48B, 48C, 48D, 51A, 51B, 51C, 51D, ' \
+                 '53A, 53B, 53C, 53D, 55A, 55B, 55C, 55D, 56A, 56B, 56C, 56D, 57A, 57B, 57C, 57D, ' \
+                 '59A, 59B, 59C, 59D, 61A, 61B, 61C, 61D, 62A, 62B, 62C, 62D, 63A, 63B, 63C, 63D, ' \
+                 '64A, 64B, 64C, 64D, 65A, 65B, 65C, 65D, 66A, 66B, 66C, 66D, 68A, 68B, 68C, 68D, ' \
+                 '69A, 69B, 69C, 69D, 71A, 71B, 71C, 71D, 72A, 72B, 72C, 72D, 75A, 75B, 75C, 75D, ' \
+                 '76A, 76B, 76C, 76D, 77A, 77B, 77C, 77D, 79A, 79B, 79C, 79D, 80A, 80B, 80C, 80D, ' \
+                 '81A, 81B, 81C, 81D, 82A, 82B, 82C, 82D, 83A, 83B, 83C, 83D, 84A, 84B, 84C, 84D, ' \
+                 '85A, 85B, 85C, 85D, 86A, 86B, 86C, 86D, 88A, 88B, 88C, 88D, 89A, 89B, 89C, 89D, ' \
+                 '92A, 92B, 92C, 92D, 93A, 93B, 93C, 93D, 95A, 95B, 95C, 95D, 100A, 100B, 100C, 100D, ' \
+                 '104A, 104B, 104C, 104D, 117A, 117B, 117C, 117D, 121A, 121B, 121C, 121D, ' \
+                 '122A, 122B, 122C, 122D, 124A, 124B, 124C, 124D, 125A, 125B, 125C, 125D, 127A, 127B, 127C, 127D\n'
 
         self.textBrowser_3.append(string)
 
@@ -58,6 +66,19 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
             '38A', '38B', '38C', '38D', '41A', '41B', '41C', '41D', '42A', '42B', '42C', '42D',
             '43A', '43B', '43C', '43D', '44A', '44B', '44C', '44D', '47A', '47B', '47C', '47D',
             '48A', '48B', '48C', '48D', '51A', '51B', '51C', '51D', '53A', '53B', '53C', '53D',
+            '55A', '55B', '55C', '55D', '56A', '56B', '56C', '56D', '57A', '57B', '57C', '57D',
+            '59A', '59B', '59C', '59D', '61A', '61B', '61C', '61D', '62A', '62B', '62C', '62D',
+            '63A', '63B', '63C', '63D', '64A', '64B', '64C', '64D', '65A', '65B', '65C', '65D',
+            '66A', '66B', '66C', '66D', '68A', '68B', '68C', '68D', '69A', '69B', '69C', '69D',
+            '71A', '71B', '71C', '71D', '72A', '72B', '72C', '72D', '75A', '75B', '75C', '75D',
+            '76A', '76B', '76C', '76D', '77A', '77B', '77C', '77D', '79A', '79B', '79C', '79D',
+            '80A', '80B', '80C', '80D', '81A', '81B', '81C', '81D', '82A', '82B', '82C', '82D',
+            '83A', '83B', '83C', '83D', '84A', '84B', '84C', '84D', '85A', '85B', '85C', '85D',
+            '86A', '86B', '86C', '86D', '88A', '88B', '88C', '88D', '89A', '89B', '89C', '89D',
+            '92A', '92B', '92C', '92D', '93A', '93B', '93C', '93D', '95A', '95B', '95C', '95D',
+            '100A', '100B', '100C', '100D', '104A', '104B', '104C', '104D', '117A', '117B', '117C', '117D',
+            '121A', '121B', '121C', '121D', '122A', '122B', '122C', '122D', '124A', '124B', '124C', '124D',
+            '125A', '125B', '125C', '125D', '127A', '127B', '127C', '127D'
         ]
         # MGI barcode sequence
         data_seq = [
@@ -95,7 +116,28 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
             'ATACGCTGTC', 'TGTACAGCGA', 'GCGTATCACT', 'CCACTAGTCC', 'AATAGTCGAA', 'TTGTCGACTT', 'GGCGACTAGG',
             'AAGACCTCTA', 'TTCTAAGAGT', 'GGAGTTCTCG', 'CCTCGGAGAC', 'AGTTGCCATA', 'TCGGCAATGT', 'GACCATTGCG',
             'CTAATGGCAC', 'TGCGCCACTT', 'GCACAATAGG', 'CATATTGTCC', 'ATGTGGCGAA', 'CCGCCTCAGA', 'AACAAGATCT',
-            'TTATTCTGAG', 'GGTGGAGCTC',
+            'TTATTCTGAG', 'GGTGGAGCTC', 'GCCGGTTATC', 'CAACCGGTGA', 'ATTAACCGCT', 'TGGTTAACAG', 'GGAATATTGA',
+            'CCTTGTGGCT', 'AAGGCGCCAG', 'TTCCACAATC', 'ATTCAACGGA', 'TGGATTACCT', 'GCCTGGTAAG', 'CAAGCCGTTC',
+            'GTACCTCAAT', 'CGTAAGATTG', 'ACGTTCTGGC', 'TACGGAGCCA', 'TGAAGCGTTG', 'GCTTCACGGC', 'CAGGATACCA',
+            'ATCCTGTAAT', 'CGTGCGATCC', 'ACGCACTGAA', 'TACATAGCTT', 'GTATGTCAGG', 'TCGGAAGGCA', 'GACCTTCCAT',
+            'CTAAGGAATG', 'AGTTCCTTGC', 'CCGATGTCGC', 'AACTGCGACA', 'TTAGCACTAT', 'GGTCATAGTG', 'ACTTAGAATG',
+            'TAGGTCTTGC', 'GTCCGAGGCA', 'CGAACTCCAT', 'TCCAAGCCTG', 'GAATTCAAGC', 'CTTGGATTCA', 'AGGCCTGGAT',
+            'CTCACAAGAC', 'AGATATTCTA', 'TCTGTGGAGT', 'GAGCGCCTCG', 'CGTTCCTACT', 'ACGGAAGTAG', 'TACCTTCGTC',
+            'GTAAGGACGA', 'GAAGGCCTGC', 'CTTCCAAGCA', 'AGGAATTCAT', 'TCCTTGGATG', 'TAGCTTGCCA', 'GTCAGGCAAT',
+            'CGATCCATTG', 'ACTGAATGGC', 'AGTCCATAGG', 'TCGAATGTCC', 'GACTTGCGAA', 'CTAGGCACTT', 'CTATCGCCTA',
+            'AGTGACAAGT', 'TCGCTATTCG', 'GACAGTGGAC', 'ATCGTGGTCT', 'TGACGCCGAG', 'GCTACAACTC', 'CAGTATTAGA',
+            'CAGTGCAGAG', 'ATCGCATCTC', 'TGACATGAGA', 'GCTATGCTCT', 'TCAGGCTGGT', 'GATCCAGCCG', 'CTGAATCAAC',
+            'AGCTTGATTA', 'ATACTCACGC', 'TGTAGATACA', 'GCGTCTGTAT', 'CACGAGCGTG', 'ATGCTCCGCG', 'TGCAGAACAC',
+            'GCATCTTATA', 'CATGAGGTGT', 'TGTGAACTTG', 'GCGCTTAGGC', 'CACAGGTCCA', 'ATATCCGAAT', 'GAGAGGTGCT',
+            'CTCTCCGCAG', 'AGAGAACATC', 'TCTCTTATGA', 'TGCACTGTAA', 'GCATAGCGTT', 'CATGTCACGG', 'ATGCGATACC',
+            'GCCTAGGCAA', 'CAAGTCCATT', 'ATTCGAATGG', 'TGGACTTGCC', 'CATGGTAATT', 'ATGCCGTTGG', 'TGCAACGGCC',
+            'GCATTACCAA', 'CACCATGTCT', 'ATAATGCGAG', 'TGTTGCACTC', 'GCGGCATAGA', 'TCAAGACGTC', 'GATTCTACGA',
+            'CTGGAGTACT', 'AGCCTCGTAG', 'CCGCTCAGTA', 'AACAGATCGT', 'TTATCTGACG', 'GGTGAGCTAC', 'TTCACGTAAG',
+            'GGATACGTTC', 'CCTGTACGGA', 'AAGCGTACCT', 'CTCGGCGGAA', 'AGACCACCTT', 'TCTAATAAGG', 'GAGTTGTTCC',
+            'GATTCTCTTC', 'CTGGAGAGGA', 'AGCCTCTCCT', 'TCAAGAGAAG', 'ATGTCTATCC', 'TGCGAGTGAA', 'GCACTCGCTT',
+            'CATAGACAGG', 'CCTTGATCAA', 'AAGGCTGATT', 'TTCCAGCTGG', 'GGAATCAGCC', 'GGAAGTGGCA', 'CCTTCGCCAT',
+            'AAGGACAATG', 'TTCCTATTGC', 'GACGCGAGTC', 'CTACACTCGA', 'AGTATAGACT', 'TCGTGTCTAG', 'CTATAACACT',
+            'AGTGTTATAG', 'TCGCGGTGTC', 'GACACCGCGA', 'TCGGCCTATG', 'GACCAAGTGC', 'CTAATTCGCA', 'AGTTGGACAT',
         ]
 
         linenum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
@@ -250,6 +292,19 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
             '38A', '38B', '38C', '38D', '41A', '41B', '41C', '41D', '42A', '42B', '42C', '42D',
             '43A', '43B', '43C', '43D', '44A', '44B', '44C', '44D', '47A', '47B', '47C', '47D',
             '48A', '48B', '48C', '48D', '51A', '51B', '51C', '51D', '53A', '53B', '53C', '53D',
+            '55A', '55B', '55C', '55D', '56A', '56B', '56C', '56D', '57A', '57B', '57C', '57D',
+            '59A', '59B', '59C', '59D', '61A', '61B', '61C', '61D', '62A', '62B', '62C', '62D',
+            '63A', '63B', '63C', '63D', '64A', '64B', '64C', '64D', '65A', '65B', '65C', '65D',
+            '66A', '66B', '66C', '66D', '68A', '68B', '68C', '68D', '69A', '69B', '69C', '69D',
+            '71A', '71B', '71C', '71D', '72A', '72B', '72C', '72D', '75A', '75B', '75C', '75D',
+            '76A', '76B', '76C', '76D', '77A', '77B', '77C', '77D', '79A', '79B', '79C', '79D',
+            '80A', '80B', '80C', '80D', '81A', '81B', '81C', '81D', '82A', '82B', '82C', '82D',
+            '83A', '83B', '83C', '83D', '84A', '84B', '84C', '84D', '85A', '85B', '85C', '85D',
+            '86A', '86B', '86C', '86D', '88A', '88B', '88C', '88D', '89A', '89B', '89C', '89D',
+            '92A', '92B', '92C', '92D', '93A', '93B', '93C', '93D', '95A', '95B', '95C', '95D',
+            '100A', '100B', '100C', '100D', '104A', '104B', '104C', '104D', '117A', '117B', '117C', '117D',
+            '121A', '121B', '121C', '121D', '122A', '122B', '122C', '122D', '124A', '124B', '124C', '124D',
+            '125A', '125B', '125C', '125D', '127A', '127B', '127C', '127D'
         ]
         # MGI barcode sequence
         data_seq = [
@@ -287,7 +342,28 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
             'ATACGCTGTC', 'TGTACAGCGA', 'GCGTATCACT', 'CCACTAGTCC', 'AATAGTCGAA', 'TTGTCGACTT', 'GGCGACTAGG',
             'AAGACCTCTA', 'TTCTAAGAGT', 'GGAGTTCTCG', 'CCTCGGAGAC', 'AGTTGCCATA', 'TCGGCAATGT', 'GACCATTGCG',
             'CTAATGGCAC', 'TGCGCCACTT', 'GCACAATAGG', 'CATATTGTCC', 'ATGTGGCGAA', 'CCGCCTCAGA', 'AACAAGATCT',
-            'TTATTCTGAG', 'GGTGGAGCTC',
+            'TTATTCTGAG', 'GGTGGAGCTC', 'GCCGGTTATC', 'CAACCGGTGA', 'ATTAACCGCT', 'TGGTTAACAG', 'GGAATATTGA',
+            'CCTTGTGGCT', 'AAGGCGCCAG', 'TTCCACAATC', 'ATTCAACGGA', 'TGGATTACCT', 'GCCTGGTAAG', 'CAAGCCGTTC',
+            'GTACCTCAAT', 'CGTAAGATTG', 'ACGTTCTGGC', 'TACGGAGCCA', 'TGAAGCGTTG', 'GCTTCACGGC', 'CAGGATACCA',
+            'ATCCTGTAAT', 'CGTGCGATCC', 'ACGCACTGAA', 'TACATAGCTT', 'GTATGTCAGG', 'TCGGAAGGCA', 'GACCTTCCAT',
+            'CTAAGGAATG', 'AGTTCCTTGC', 'CCGATGTCGC', 'AACTGCGACA', 'TTAGCACTAT', 'GGTCATAGTG', 'ACTTAGAATG',
+            'TAGGTCTTGC', 'GTCCGAGGCA', 'CGAACTCCAT', 'TCCAAGCCTG', 'GAATTCAAGC', 'CTTGGATTCA', 'AGGCCTGGAT',
+            'CTCACAAGAC', 'AGATATTCTA', 'TCTGTGGAGT', 'GAGCGCCTCG', 'CGTTCCTACT', 'ACGGAAGTAG', 'TACCTTCGTC',
+            'GTAAGGACGA', 'GAAGGCCTGC', 'CTTCCAAGCA', 'AGGAATTCAT', 'TCCTTGGATG', 'TAGCTTGCCA', 'GTCAGGCAAT',
+            'CGATCCATTG', 'ACTGAATGGC', 'AGTCCATAGG', 'TCGAATGTCC', 'GACTTGCGAA', 'CTAGGCACTT', 'CTATCGCCTA',
+            'AGTGACAAGT', 'TCGCTATTCG', 'GACAGTGGAC', 'ATCGTGGTCT', 'TGACGCCGAG', 'GCTACAACTC', 'CAGTATTAGA',
+            'CAGTGCAGAG', 'ATCGCATCTC', 'TGACATGAGA', 'GCTATGCTCT', 'TCAGGCTGGT', 'GATCCAGCCG', 'CTGAATCAAC',
+            'AGCTTGATTA', 'ATACTCACGC', 'TGTAGATACA', 'GCGTCTGTAT', 'CACGAGCGTG', 'ATGCTCCGCG', 'TGCAGAACAC',
+            'GCATCTTATA', 'CATGAGGTGT', 'TGTGAACTTG', 'GCGCTTAGGC', 'CACAGGTCCA', 'ATATCCGAAT', 'GAGAGGTGCT',
+            'CTCTCCGCAG', 'AGAGAACATC', 'TCTCTTATGA', 'TGCACTGTAA', 'GCATAGCGTT', 'CATGTCACGG', 'ATGCGATACC',
+            'GCCTAGGCAA', 'CAAGTCCATT', 'ATTCGAATGG', 'TGGACTTGCC', 'CATGGTAATT', 'ATGCCGTTGG', 'TGCAACGGCC',
+            'GCATTACCAA', 'CACCATGTCT', 'ATAATGCGAG', 'TGTTGCACTC', 'GCGGCATAGA', 'TCAAGACGTC', 'GATTCTACGA',
+            'CTGGAGTACT', 'AGCCTCGTAG', 'CCGCTCAGTA', 'AACAGATCGT', 'TTATCTGACG', 'GGTGAGCTAC', 'TTCACGTAAG',
+            'GGATACGTTC', 'CCTGTACGGA', 'AAGCGTACCT', 'CTCGGCGGAA', 'AGACCACCTT', 'TCTAATAAGG', 'GAGTTGTTCC',
+            'GATTCTCTTC', 'CTGGAGAGGA', 'AGCCTCTCCT', 'TCAAGAGAAG', 'ATGTCTATCC', 'TGCGAGTGAA', 'GCACTCGCTT',
+            'CATAGACAGG', 'CCTTGATCAA', 'AAGGCTGATT', 'TTCCAGCTGG', 'GGAATCAGCC', 'GGAAGTGGCA', 'CCTTCGCCAT',
+            'AAGGACAATG', 'TTCCTATTGC', 'GACGCGAGTC', 'CTACACTCGA', 'AGTATAGACT', 'TCGTGTCTAG', 'CTATAACACT',
+            'AGTGTTATAG', 'TCGCGGTGTC', 'GACACCGCGA', 'TCGGCCTATG', 'GACCAAGTGC', 'CTAATTCGCA', 'AGTTGGACAT',
         ]
 
         linenum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
