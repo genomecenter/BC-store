@@ -169,7 +169,7 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
         str2.replace(" ", "")
         # print(str2, '2')
         if (str2 != 'all1') and (len(str2) != 0):
-            rate2 = [float(x.strip()) for x in str2.split(',')]
+            rate2 = [float(x.strip()) for x in str2.strip().split(',') if x]
         if (str2 == 'all1') or (len(str2) == 0):
             rate2 = ['all1']
             str2 = "equal rate"
@@ -390,12 +390,12 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
         message = ''
         str1 = self.textEdit.toPlainText()  # names
         # print(str1, '1')
-        names0 = [int(x.strip()) for x in str1.split(',')]
+        names0 = [x.strip() for x in str1.strip().split(',') if x]
         # print(names0, '1')
         str2 = self.textEdit_4.toPlainText()  # rate+add
         # print(str2, '2')
         if ((str2) != 'all1') and (len(str2) != 0):
-            rateadd = [float(x.strip()) for x in str2.split(',')]
+            rateadd = [float(x.strip()) for x in str2.strip().split(',') if x]
 
         if (str2 == 'all1') or (len(str2) == 0):
             rateadd = ['all1']
@@ -412,7 +412,7 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
         # howmanyadd = howmanyandcriteria[0]
         strfromwhich = self.textEdit_6.toPlainText()
         # print(strfromwhich)
-        fromwhich = [int(x.strip()) for x in strfromwhich.split(',')]
+        fromwhich = [x.strip() for x in strfromwhich.strip().split(',') if x]
 
         # criteria = howmanyandcriteria[1]  # 0 for strong, 1 for light
         if self.radioButton.isChecked() == True:
