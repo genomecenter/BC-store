@@ -2,23 +2,69 @@ import sys
 import os
 import subprocess
 import re
-import pandas as pd
+# import pandas as pd
 import matplotlib.pyplot as plt
 import itertools
 
 #CONST
 #MGI barcode numbers
-MGI_barcode_number=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',
-                    '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34',
-                    '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
-                    '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66',
-                    '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82',
-                    '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98',
-                    '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112',
-                    '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126',
-                    '127', '128', '999']
+MGI_barcode_number = [
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',
+    '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34',
+    '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
+    '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66',
+    '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82',
+    '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98',
+    '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112',
+    '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126',
+    '127', '128', '999',
+    '1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '3A', '3B', '3C', '3D', '4A', '4B', '4C', '4D',
+    '13A', '13B', '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D', '16A', '16B', '16C', '16D',
+    '25A', '25B', '25C', '25D', '26A', '26B', '26C', '26D', '29A', '29B', '29C', '29D',
+    '32A', '32B', '32C', '32D', '33A', '33B', '33C', '33D', '35A', '35B', '35C', '35D', '36A', '36B', '36C', '36D',
+    '37A', '37B', '37C', '37D', '38A', '38B', '38C', '38D', '41A', '41B', '41C', '41D', '42A', '42B', '42C', '42D',
+    '43A', '43B', '43C', '43D', '44A', '44B', '44C', '44D', '47A', '47B', '47C', '47D', '48A', '48B', '48C', '48D',
+    '51A', '51B', '51C', '51D', '53A', '53B', '53C', '53D',
+]
 #MGI barcode sequence
-MGI_barcode_sequence=['TAGGTCCGAT', 'GGACGGAATC', 'CTTACTGCCG', 'ACCTAATTGA', 'TTCGTATCCG', 'GGTAACGAGC', 'CAACGTATAA', 'ACGTCGCGTT', 'TTCTGCTAGC', 'AGGAAGATAG', 'GCTCTTGCTT', 'CAAGCACGCA', 'CGGCAATCCG', 'ATCAGGATTC', 'TCATTCCAGA', 'GATGCTGGAT', 'GTGAGTGATG', 'GAGTCAGCTG', 'TGTCTGCGAA', 'ATTGGTACAA', 'CGATTGTGGT', 'ACAGACTTCC', 'TCCACACTCT', 'CACCACAAGC', 'TAGAGGACAA', 'CCTAGCGAAT', 'GTAGTCATCG', 'GCTGAGCTGT', 'AACCTAGATA', 'TTGCCATCTC', 'AGATCTTGCG', 'CGCTATCGGC', 'GCAACGATGG', 'TAATCGTTCA', 'GTTCGCTCTA', 'TCTCACACAT', 'CTGTTAGGAT', 'CGCAGACGCG', 'AAGGATCATC', 'AGCGTTGAGC', 'TTAGATGCAT', 'GTCCAGAGCT', 'CACGTGATAG', 'CCACTAGTCC', 'TGGACTTGGC', 'GCTTGACAGG', 'AAGACCTCTA', 'AGTTGCCATA', 'ATGTACGCAG', 'TTAATGAGAT', 'TGCGCCACTT', 'CATTAAGGCC', 'CCGCCTCAGA', 'AATCGGCTCG', 'GCCGGTTATC', 'GGAATATTGA', 'ATTCAACGGA', 'AACTGTACTG', 'GTACCTCAAT', 'GACTTCTAAT', 'TGAAGCGTTG', 'CGTGCGATCC', 'TCGGAAGGCA', 'CCGATGTCGC', 'ACTTAGAATG', 'TCCAAGCCTG', 'AGACGATGAT', 'CTCACAAGAC', 'CGTTCCTACT', 'GTGGTTGTGA', 'GAAGGCCTGC', 'TAGCTTGCCA', 'GACAATGCTC', 'GCTAATCACA', 'AGTCCATAGG', 'CTATCGCCTA', 'ATCGTGGTCT', 'TGGCTAATAC', 'CAGTGCAGAG', 'TCAGGCTGGT', 'ATACTCACGC', 'ATGCTCCGCG', 'TGTGAACTTG', 'GAGAGGTGCT', 'TGCACTGTAA', 'GCCTAGGCAA', 'CCATCATAGC', 'CATGGTAATT', 'CACCATGTCT', 'ATATGTCTGG', 'AAGGAAGCGT', 'TCAAGACGTC', 'CCGCTCAGTA', 'GGTGTGTACA', 'TTCACGTAAG', 'GGTTCCACAC', 'AGGTATTCTT', 'CGAATGCAAC', 'TTCAACGGCG', 'CTCGGCGGAA', 'ACGGTAATGG', 'GATCCGACGT', 'TCACGATACA', 'GATTCTCTTC', 'ACAATTAATA', 'ACCAGCATTA', 'CATCAGGCCC', 'CCTTCTCAAG', 'TAGCTCAACG', 'TAGTGCCCGT', 'GTTGAGAGAA', 'GCCTCATGGA', 'GGTCAACCTA', 'CCAGAGTCAG', 'AACAGGCAGT', 'GCTCCATGAC', 'ATGTCTATCC', 'CTTGACAAGG', 'TGTTTCGTTA', 'TGGAGTACCC', 'CCTTGATCAA', 'GGAAGTGGCA', 'AACATTCTAC', 'GACGCGAGTC', 'CTATAACACT', 'AGTCTCGTGT', 'TCGGCCTATG', 'TTGCAGACGG', 'GCGTATGCGG']
+MGI_barcode_sequence = [
+    'TAGGTCCGAT', 'GGACGGAATC', 'CTTACTGCCG', 'ACCTAATTGA', 'TTCGTATCCG', 'GGTAACGAGC', 'CAACGTATAA',
+    'ACGTCGCGTT', 'TTCTGCTAGC', 'AGGAAGATAG', 'GCTCTTGCTT', 'CAAGCACGCA', 'CGGCAATCCG', 'ATCAGGATTC',
+    'TCATTCCAGA', 'GATGCTGGAT', 'GTGAGTGATG', 'GAGTCAGCTG', 'TGTCTGCGAA', 'ATTGGTACAA', 'CGATTGTGGT',
+    'ACAGACTTCC', 'TCCACACTCT', 'CACCACAAGC', 'TAGAGGACAA', 'CCTAGCGAAT', 'GTAGTCATCG', 'GCTGAGCTGT',
+    'AACCTAGATA', 'TTGCCATCTC', 'AGATCTTGCG', 'CGCTATCGGC', 'GCAACGATGG', 'TAATCGTTCA', 'GTTCGCTCTA',
+    'TCTCACACAT', 'CTGTTAGGAT', 'CGCAGACGCG', 'AAGGATCATC', 'AGCGTTGAGC', 'TTAGATGCAT', 'GTCCAGAGCT',
+    'CACGTGATAG', 'CCACTAGTCC', 'TGGACTTGGC', 'GCTTGACAGG', 'AAGACCTCTA', 'AGTTGCCATA', 'ATGTACGCAG',
+    'TTAATGAGAT', 'TGCGCCACTT', 'CATTAAGGCC', 'CCGCCTCAGA', 'AATCGGCTCG', 'GCCGGTTATC', 'GGAATATTGA',
+    'ATTCAACGGA', 'AACTGTACTG', 'GTACCTCAAT', 'GACTTCTAAT', 'TGAAGCGTTG', 'CGTGCGATCC', 'TCGGAAGGCA',
+    'CCGATGTCGC', 'ACTTAGAATG', 'TCCAAGCCTG', 'AGACGATGAT', 'CTCACAAGAC', 'CGTTCCTACT', 'GTGGTTGTGA',
+    'GAAGGCCTGC', 'TAGCTTGCCA', 'GACAATGCTC', 'GCTAATCACA', 'AGTCCATAGG', 'CTATCGCCTA', 'ATCGTGGTCT',
+    'TGGCTAATAC', 'CAGTGCAGAG', 'TCAGGCTGGT', 'ATACTCACGC', 'ATGCTCCGCG', 'TGTGAACTTG', 'GAGAGGTGCT',
+    'TGCACTGTAA', 'GCCTAGGCAA', 'CCATCATAGC', 'CATGGTAATT', 'CACCATGTCT', 'ATATGTCTGG', 'AAGGAAGCGT',
+    'TCAAGACGTC', 'CCGCTCAGTA', 'GGTGTGTACA', 'TTCACGTAAG', 'GGTTCCACAC', 'AGGTATTCTT', 'CGAATGCAAC',
+    'TTCAACGGCG', 'CTCGGCGGAA', 'ACGGTAATGG', 'GATCCGACGT', 'TCACGATACA', 'GATTCTCTTC', 'ACAATTAATA',
+    'ACCAGCATTA', 'CATCAGGCCC', 'CCTTCTCAAG', 'TAGCTCAACG', 'TAGTGCCCGT', 'GTTGAGAGAA', 'GCCTCATGGA',
+    'GGTCAACCTA', 'CCAGAGTCAG', 'AACAGGCAGT', 'GCTCCATGAC', 'ATGTCTATCC', 'CTTGACAAGG', 'TGTTTCGTTA',
+    'TGGAGTACCC', 'CCTTGATCAA', 'GGAAGTGGCA', 'AACATTCTAC', 'GACGCGAGTC', 'CTATAACACT', 'AGTCTCGTGT',
+    'TCGGCCTATG', 'TTGCAGACGG', 'GCGTATGCGG',
+
+    'TAGGTCCGAT', 'GTCCGAACTG', 'CGAACTTAGC', 'ACTTAGGTCA', 'GGACGGAATC', 'CCTACCTTGA', 'AAGTAAGGCT',
+    'TTCGTTCCAG', 'CTTACTGCCG', 'AGGTAGCAAC', 'TCCGTCATTA', 'GAACGATGGT', 'ACCTAATTGA', 'TAAGTTGGCT',
+    'GTTCGGCCAG', 'CGGACCAATC', 'CGGCAATCCG', 'ACCATTGAAC', 'TAATGGCTTA', 'GTTGCCAGGT', 'ATCAGGATTC',
+    'TGATCCTGGA', 'GCTGAAGCCT', 'CAGCTTCAAG', 'TCATTCCAGA', 'GATGGAATCT', 'CTGCCTTGAG', 'AGCAAGGCTC',
+    'GATGCTGGAT', 'CTGCAGCCTG', 'AGCATCAAGC', 'TCATGATTCA', 'TAGAGGACAA', 'GTCTCCTATT', 'CGAGAAGTGG',
+    'ACTCTTCGCC', 'CCTAGCGAAT', 'AAGTCACTTG', 'TTCGATAGGC', 'GGACTGTCCA', 'AACCTAGATA', 'TTAAGTCTGT',
+    'GGTTCGAGCG', 'CCGGACTCAC', 'CGCTATCGGC', 'ACAGTGACCA', 'TATCGCTAAT', 'GTGACAGTTG', 'GCAACGATGG',
+    'CATTACTGCC', 'ATGGTAGCAA', 'TGCCGTCATT', 'GTTCGCTCTA', 'CGGACAGAGT', 'ACCTATCTCG', 'TAAGTGAGAC',
+    'TCTCACACAT', 'GAGATATATG', 'CTCTGTGTGC', 'AGAGCGCGCA', 'CTGTTAGGAT', 'AGCGGTCCTG', 'TCACCGAAGC',
+    'GATAACTTCA', 'CGCAGACGCG', 'ACATCTACAC', 'TATGAGTATA', 'GTGCTCGTGT', 'TTAGATGCAT', 'GGTCTGCATG',
+    'CCGAGCATGC', 'AACTCATGCA', 'GTCCAGAGCT', 'CGAATCTCAG', 'ACTTGAGATC', 'TAGGCTCTGA', 'CACGTGATAG',
+    'ATACGCTGTC', 'TGTACAGCGA', 'GCGTATCACT', 'CCACTAGTCC', 'AATAGTCGAA', 'TTGTCGACTT', 'GGCGACTAGG',
+    'AAGACCTCTA', 'TTCTAAGAGT', 'GGAGTTCTCG', 'CCTCGGAGAC', 'AGTTGCCATA', 'TCGGCAATGT', 'GACCATTGCG',
+    'CTAATGGCAC', 'TGCGCCACTT', 'GCACAATAGG', 'CATATTGTCC', 'ATGTGGCGAA', 'CCGCCTCAGA', 'AACAAGATCT',
+    'TTATTCTGAG', 'GGTGGAGCTC',
+]
+
 linenum=list(range(0,129))
 #criteria
 min_rate_strong = 0.15
@@ -313,24 +359,38 @@ elif option == "help":
         "set - this parameter...\n"\
     )
 elif option == "MGI_sets":
-    print(\
-        '\nset1: 1,2,3,4'+\
-        '\nset2: 13,14,15,16'+\
-        '\nset3: 41,42,43,44,45,46,47,48'+\
-        '\nset4: 57,58,59,60,61,62,63,64'+\
-        '\nset5: 65,66,67,68,69,70,71,72'+\
-        '\nset6: 73,74,75,76,77,78,79,80'+\
-        '\nset7: 81,82,83,84,85,86,87,88'+\
-        '\nset8: 89,90,91,92,93,94,95,96'+\
-        '\nset9: 97,98,99,100,101,102,103,104'+\
-        '\nset10: 121,122,123,124,125,126,127,128'+\
-        '\nsetbig: 25,26,117,28,29,30,114,32,33,34,35,36,'+\
-                  '37,38,39,115,49,50,51,52,53,116,55,56\n'\
-    )
+    print(
+        '\nset1:\t1,2,3,4',
+        '\nset2:\t13,14,15,16',
+        '\nset3:\t41,42,43,44,45,46,47,48',
+        '\nset4:\t57,58,59,60,61,62,63,64',
+        '\nset5:\t65,66,67,68,69,70,71,72',
+        '\nset6:\t73,74,75,76,77,78,79,80',
+        '\nset7:\t81,82,83,84,85,86,87,88',
+        '\nset8:\t89,90,91,92,93,94,95,96',
+        '\nset9:\t97,98,99,100,101,102,103,104',
+        '\nset10:\t121,122,123,124,125,126,127,128',
+        '\nsetbig:\t25,26,117,28,29,30,114,32,33,34,35,36,',
+        '\n\t37,38,39,115,49,50,51,52,53,116,55,56',
+        '\nsetGC_ABCD:\t1A,1B,1C,1D,2A,2B,2C,2D,',
+        '\n\t\t3A,3B,3C,3D,4A,4B,4C,4D,',
+        '\n\t\t13A,13B,13C,13D,14A,14B,14C,14D,',
+        '\n\t\t15A,15B,15C,15D,16A,16B,16C,16D,',
+        '\n\t\t25A,25B,25C,25D,26A,26B,26C,26D,',
+        '\n\t\t29A,29B,29C,29D,32A,32B,32C,32D,',
+        '\n\t\t33A,33B,33C,33D,35A,35B,35C,35D,',
+        '\n\t\t36A,36B,36C,36D,37A,37B,37C,37D,',
+        '\n\t\t38A,38B,38C,38D,41A,41B,41C,41D,',
+        '\n\t\t42A,42B,42C,42D,43A,43B,43C,43D,',
+        '\n\t\t44A,44B,44C,44D,47A,47B,47C,47D,',
+        '\n\t\t48A,48B,48C,48D,51A,51B,51C,51D,',
+        '\n\t\t53A,53B,53C,53D\n'
+        )
 else:
-    print(\
-        "\nincorrect command "+str(sys.argv[1])+"\n"+\
-        "Please, run script with \"help\" like:\n"\
-        "python3 bc-store_script.py help\n"\
-        "to see the variants\n"\
+    print(
+        "\nincorrect command "+str(sys.argv[1])+"\n",
+        "Please, run script with \"help\" like:\n",
+        "python3 bc-store_script.py help\n",
+        "to see the variants\n",
    )
+print(len(MGI_barcode_number), len(MGI_barcode_sequence))
