@@ -49,7 +49,31 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
                  '\n92A, 92B, 92C, 92D, \n93A, 93B, 93C, 93D, \n95A, 95B, 95C, 95D, \n100A, 100B, 100C, 100D, ' \
                  '\n104A, 104B, 104C, 104D, \n117A, 117B, 117C, 117D, \n121A, 121B, 121C, 121D, ' \
                  '\n122A, 122B, 122C, 122D, \n124A, 124B, 124C, 124D, \n125A, 125B, 125C, 125D, ' \
-                 '\n127A, 127B, 127C, 127D\n'
+                 '\n127A, 127B, 127C, 127D' \
+                 '\n\nset_Plate2_GC: \nP2_A1, P2_B1, P2_C1, P2_D1, P2_E1, P2_F1, P2_G1, P2_H1,' \
+                                    '\nP2_A2, P2_B2, P2_C2, P2_D2, P2_E2, P2_F2, P2_G2, P2_H2,' \
+                                    '\nP2_A3, P2_B3, P2_C3, P2_D3, P2_E3, P2_F3, P2_G3, P2_H3,' \
+                                    '\nP2_A4, P2_B4, P2_C4, P2_D4, P2_E4, P2_F4, P2_G4, P2_H4,' \
+                                    '\nP2_A5, P2_B5, P2_C5, P2_D5, P2_E5, P2_F5, P2_G5, P2_H5,' \
+                                    '\nP2_A6, P2_B6, P2_C6, P2_D6, P2_E6, P2_F6, P2_G6, P2_H6,' \
+                                    '\nP2_A7, P2_B7, P2_C7, P2_D7, P2_E7, P2_F7, P2_G7, P2_H7,' \
+                                    '\nP2_A8, P2_B8, P2_C8, P2_D8, P2_E8, P2_F8, P2_G8, P2_H8,' \
+                                    '\nP2_A9, P2_B9, P2_C9, P2_D9, P2_E9, P2_F9, P2_G9, P2_H9,' \
+                                    '\nP2_A10,P2_B10,P2_C10,P2_D10,P2_E10,P2_F10,P2_G10,P2_H10,'\
+                                    '\nP2_A11,P2_B11,P2_C11,P2_D11,P2_E11,P2_F11,P2_G11,P2_H11,'\
+                                    '\nP2_A12,P2_B12,P2_C12,P2_D12,P2_E12,P2_F12,P2_G12,P2_H12' \
+                '\n\nset_Plate3_GC:  \nP3_A1, P3_B1, P3_C1, P3_D1, P3_E1, P3_F1, P3_G1, P3_H1,' \
+                                    '\nP3_A2, P3_B2, P3_C2, P3_D2, P3_E2, P3_F2, P3_G2, P3_H2,' \
+                                    '\nP3_A3, P3_B3, P3_C3, P3_D3, P3_E3, P3_F3, P3_G3, P3_H3,' \
+                                    '\nP3_A4, P3_B4, P3_C4, P3_D4, P3_E4, P3_F4, P3_G4, P3_H4,' \
+                                    '\nP3_A5, P3_B5, P3_C5, P3_D5, P3_E5, P3_F5, P3_G5, P3_H5,' \
+                                    '\nP3_A6, P3_B6, P3_C6, P3_D6, P3_E6, P3_F6, P3_G6, P3_H6,' \
+                                    '\nP3_A7, P3_B7, P3_C7, P3_D7, P3_E7, P3_F7, P3_G7, P3_H7,' \
+                                    '\nP3_A8, P3_B8, P3_C8, P3_D8, P3_E8, P3_F8, P3_G8, P3_H8,' \
+                                    '\nP3_A9, P3_B9, P3_C9, P3_D9, P3_E9, P3_F9, P3_G9, P3_H9,' \
+                                    '\nP3_A10,P3_B10,P3_C10,P3_D10,P3_E10,P3_F10,P3_G10,P3_H10,'\
+                                    '\nP3_A11,P3_B11,P3_C11,P3_D11,P3_E11,P3_F11,P3_G11,P3_H11,'\
+                                    '\nP3_A12,P3_B12,P3_C12,P3_D12,P3_E12,P3_F12,P3_G12,P3_H12' \
 
         self.textBrowser_3.append(string)
 
@@ -84,7 +108,36 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
             '92A', '92B', '92C', '92D', '93A', '93B', '93C', '93D', '95A', '95B', '95C', '95D',
             '100A', '100B', '100C', '100D', '104A', '104B', '104C', '104D', '117A', '117B', '117C', '117D',
             '121A', '121B', '121C', '121D', '122A', '122B', '122C', '122D', '124A', '124B', '124C', '124D',
-            '125A', '125B', '125C', '125D', '127A', '127B', '127C', '127D'
+            '125A', '125B', '125C', '125D', '127A', '127B', '127C', '127D',
+            
+            # Plate 2
+            'P2_A1', 'P2_B1', 'P2_C1', 'P2_D1', 'P2_E1', 'P2_F1', 'P2_G1', 'P2_H1', 
+            'P2_A2', 'P2_B2', 'P2_C2', 'P2_D2', 'P2_E2', 'P2_F2', 'P2_G2', 'P2_H2', 
+            'P2_A3', 'P2_B3', 'P2_C3', 'P2_D3', 'P2_E3', 'P2_F3', 'P2_G3', 'P2_H3', 
+            'P2_A4', 'P2_B4', 'P2_C4', 'P2_D4', 'P2_E4', 'P2_F4', 'P2_G4', 'P2_H4', 
+            'P2_A5', 'P2_B5', 'P2_C5', 'P2_D5', 'P2_E5', 'P2_F5', 'P2_G5', 'P2_H5', 
+            'P2_A6', 'P2_B6', 'P2_C6', 'P2_D6', 'P2_E6', 'P2_F6', 'P2_G6', 'P2_H6', 
+            'P2_A7', 'P2_B7', 'P2_C7', 'P2_D7', 'P2_E7', 'P2_F7', 'P2_G7', 'P2_H7', 
+            'P2_A8', 'P2_B8', 'P2_C8', 'P2_D8', 'P2_E8', 'P2_F8', 'P2_G8', 'P2_H8', 
+            'P2_A9', 'P2_B9', 'P2_C9', 'P2_D9', 'P2_E9', 'P2_F9', 'P2_G9', 'P2_H9', 
+            'P2_A10', 'P2_B10', 'P2_C10', 'P2_D10', 'P2_E10', 'P2_F10', 'P2_G10', 'P2_H10', 
+            'P2_A11', 'P2_B11', 'P2_C11', 'P2_D11', 'P2_E11', 'P2_F11', 'P2_G11', 'P2_H11', 
+            'P2_A12', 'P2_B12', 'P2_C12', 'P2_D12', 'P2_E12', 'P2_F12', 'P2_G12', 'P2_H12',
+            
+            # Plate 3
+            'P3_A1', 'P3_B1', 'P3_C1', 'P3_D1', 'P3_E1', 'P3_F1', 'P3_G1', 'P3_H1', 
+            'P3_A2', 'P3_B2', 'P3_C2', 'P3_D2', 'P3_E2', 'P3_F2', 'P3_G2', 'P3_H2', 
+            'P3_A3', 'P3_B3', 'P3_C3', 'P3_D3', 'P3_E3', 'P3_F3', 'P3_G3', 'P3_H3', 
+            'P3_A4', 'P3_B4', 'P3_C4', 'P3_D4', 'P3_E4', 'P3_F4', 'P3_G4', 'P3_H4', 
+            'P3_A5', 'P3_B5', 'P3_C5', 'P3_D5', 'P3_E5', 'P3_F5', 'P3_G5', 'P3_H5', 
+            'P3_A6', 'P3_B6', 'P3_C6', 'P3_D6', 'P3_E6', 'P3_F6', 'P3_G6', 'P3_H6', 
+            'P3_A7', 'P3_B7', 'P3_C7', 'P3_D7', 'P3_E7', 'P3_F7', 'P3_G7', 'P3_H7', 
+            'P3_A8', 'P3_B8', 'P3_C8', 'P3_D8', 'P3_E8', 'P3_F8', 'P3_G8', 'P3_H8', 
+            'P3_A9', 'P3_B9', 'P3_C9', 'P3_D9', 'P3_E9', 'P3_F9', 'P3_G9', 'P3_H9', 
+            'P3_A10', 'P3_B10', 'P3_C10', 'P3_D10', 'P3_E10', 'P3_F10', 'P3_G10', 'P3_H10', 
+            'P3_A11', 'P3_B11', 'P3_C11', 'P3_D11', 'P3_E11', 'P3_F11', 'P3_G11', 'P3_H11', 
+            'P3_A12', 'P3_B12', 'P3_C12', 'P3_D12', 'P3_E12', 'P3_F12', 'P3_G12', 'P3_H12',
+            
         ]
         # MGI barcode sequence
         data_seq = [
@@ -144,14 +197,35 @@ class ExampleApp(QtWidgets.QMainWindow, designwhole.Ui_MainWindow):
             'CATAGACAGG', 'CCTTGATCAA', 'AAGGCTGATT', 'TTCCAGCTGG', 'GGAATCAGCC', 'GGAAGTGGCA', 'CCTTCGCCAT',
             'AAGGACAATG', 'TTCCTATTGC', 'GACGCGAGTC', 'CTACACTCGA', 'AGTATAGACT', 'TCGTGTCTAG', 'CTATAACACT',
             'AGTGTTATAG', 'TCGCGGTGTC', 'GACACCGCGA', 'TCGGCCTATG', 'GACCAAGTGC', 'CTAATTCGCA', 'AGTTGGACAT',
+            
+            # Barcodes Plate 2
+            'GAAGGTAGCC', 'GCAGTCTCTC', 'TCGTCGCGCA', 'ACTGCTCAAG', 'ACTCCGGATA', 'CCTTACGCAG', 'AGGTATCAGG', 'CCGGTGGACC', # A1-G1
+            'CTCCAGTGGC', 'TTCAGCGGCT', 'GGAACGTGAG', 'CGGTGCATAA', 'CTTAGAGTGT', 'TACGCGTGTG', 'AACACTGTAC', 'GCGTACCTGA', # A2-G2
+            'AGCTTATTGT', 'GTTCATTAGC', 'AATTCGTAGA', 'CTGGAATGAA', 'TTCGTTGATG', 'CGACCAATTC', 'CAGGTAACTT', 'AATCTTACAG', # A3-G3
+            'TTCGTAATCC', 'CCAGAAGCTC', 'TCGTACAGGT', 'AATACGGAAG', 'GGAAGAGCAT', 'TTCGCGTACC', 'ACAGACTATT', 'TACTTGTTAT', # A4-G4
+            'TCGTCTGTTA', 'GTTCGGCGCA', 'AGGCCTCTCC', 'AGGTGTTCAG', 'CTCAATAACG', 'ACTCGTCCGG', 'CAGTGCGCGA', 'TGCCTGACGC', # A5-G5
+            'GTTACTCGGT', 'CAGCACAATT', 'GCTGCATCTG', 'TTCATATTGA', 'CTAGGCCGGA', 'CGCCTGATCA', 'CGCGTCCGCA', 'AATGTAGCGC', # A6-G6
+            'GACAATAGAC', 'CGTTGACCTT', 'TGGCGCACTC', 'CTAGTGCGAG', 'AATCCTGAGT', 'ACGCGCATCA', 'AACGTTGGCC', 'GCGGCGTATA', # A7-G7
+            'TCCGAATTCT', 'CCAATTCACG', 'CATTCGGTAA', 'TATTGATCTA', 'AGTAACTAAT', 'CCAGCTGTGC', 'CTCCTAATGT', 'AATCGTTCTT', # A8-G8
+            'TCACTTGCGG', 'GGAGGCGTAA', 'ATGCAGTAGG', 'TGGTAGTTCG', 'GTCGCCAGAC', 'CCTAGACAGA', 'TTGTGAGTCT', 'CGCGTGCAGC', # A9-G9
+            'TCCGTCCATT', 'CGTACTCAAC', 'CTGTGGTAGT', 'TATCTAGTGG', 'TAATGCGGAA', 'ATCACTCGCG', 'TCTGACGGCC', 'TTGAATTACA', # A10-G10
+            'ACGCGGTCTA', 'GTACGTATGC', 'GCCTATATAA', 'TCCTAGTCTG', 'GTAGCAGTAT', 'GCGTCAGCCG', 'CAATAGGCGG', 'AGTCTATACC', # A11-G11
+            'CTTGGACGAC', 'ACCGCCGGTA', 'CTCATTAGAA', 'CATCAGACGT', 'CCTGATCATT', 'TTACTTATTG', 'CGAGTGGTTC', 'TGTCGAATCA',  # A12-G12
+            
+            # Barcode Plate 3
+            'GGAACTCTAA', 'TCGCCGTTAG', 'CGAAGTTAGA', 'TACTTCAGCT', 'TTAACAGCTT', 'CGTATTGCGG', 'CAGGCGAATC', 'AATCTGAGCT', # A1-G1
+            'ACGTAACATA', 'TACCGCCGCC', 'ACAACCGTTG', 'ATCGGATATT', 'CACTGTGGTG', 'GTAGAACGGT', 'GTTCTCACGG', 'GAATAGACCT', # A2-G2 
+            'GCCGCCTCAA', 'AGTATCGTGA', 'TTACTCGAAC', 'CGGCCTTATC', 'TCCTTAGCGC', 'ATTCAGCTGT', 'ATTAGACCTC', 'CGGTTGATGC', # A3-G3
+            'GGCAGAATAA', 'CCTCTTAAGT', 'ACCGCACCTT', 'CATTCTTGGT', 'GTGGAGGCCG', 'GATATATGCT', 'TCGAACATTA', 'TTCCGCGCAA', # A4-G4
+            'CACTCGCAAG', 'TTGCACTGCC', 'AGTCGGAAGA', 'CGTGTAGAGA', 'ATATATGCTG', 'GAATCTTGTC', 'AACTCGAGTC', 'CTCGGTCATC', # A5-G5
+            'AGACTTCCTC', 'AGAATGTACG', 'TAGGTGTTCC', 'CTGGCCGTAC', 'CCTTCACGAA', 'AATTAAGTCT', 'TGATTGTCTT', 'CAAGCTTGAA', # A6-G6
+            'AGGCAGACTT', 'GATCGCGCAC', 'AATTAACAGC', 'CACGCACGCT', 'CCATTCACGC', 'TGCCGCTTGA', 'TTAAGGTAGC', 'TCAGGTGACA', # A7-G7
+            'TAGCGTTAGC', 'GGCACTAGTG', 'GGCAGTCTCT', 'ATCTACCGCA', 'CATTAACTAG', 'TGCGCAGTTA', 'GCATTGTGCG', 'AGTGCGTATT', # A8-G8
+            'GTCTAGTTAG', 'GTATTCAGGT', 'CAAGTGTCGC', 'TCGAGACCTA', 'GCACCTTCTA', 'GGTCTCCTCA', 'CCGGTTGTAA', 'TGTTGTAGAC', # A9-G9
+            'GCAGCTGGTG', 'ATGTTATACT', 'CGGTGATATA', 'GTACAGATAA', 'GGTGAATGCC', 'AGTACTCTGG', 'ATCTGCACTT', 'CTAATCGTGG', # A10-G10
+            'TACTGAACAC', 'AGCACGTCCT', 'AATCTCGTTC', 'TGGCCGTACA', 'CGGAACTCTT', 'TAAGGCGCTT', 'GCACTTAACA', 'CTCGACCGAT', # A11-G11
+            'TTAGCAGGCA', 'TGTTGAGTGC', 'GCGTGTACTC', 'TCGCAGCACC', 'GGTCCATCAC', 'TCGTTAATCG', 'GCCTCTCCAG', 'GAGATTCTGT', # A12-G12
         ]
-
-        linenum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-                   28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
-                   53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77,
-                   78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101,
-                   102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,
-                   122, 123, 124, 125, 126, 127, 128]
 
         # CONST VALUES
         NUCLEN = 10  # lenght of barcode
